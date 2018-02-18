@@ -1,0 +1,63 @@
+﻿@model IEnumerable<LabASPv2.Models.Review>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    String yes = "Да";
+    String no = "Нет";
+}
+
+<div class="body callout accordion bordered_gcd">
+    <div class="grid-x">
+        <div class="large-1 cell">
+            <h5>Книга №</h5>
+        </div>
+        <div class="large-2 cell">
+            <h5>Автор</h5>
+        </div>
+        <div class="large-3 cell">
+            <h5>Текст</h5>
+        </div>
+        <div class="large-2 cel">
+            <h5>Лайков</h5>
+        </div>
+        <div class="large-1 cell">
+            <h5>Оск.</h5>
+        </div>
+        <div class="large-3 cell">
+            <h5>Причина</h5>
+        </div>
+    </div>
+    @foreach (var review in Model)
+    {
+        <hr />
+        <div class="grid-x">
+            <div class="large-1 cell">
+                <p>@review.BookId</p>
+            </div>
+            <div class="large-2 cell">
+                <p>@review.AuthorName</p>
+            </div>
+            <div class="large-3 cell">
+                <p>@review.Text</p>
+            </div>
+            <div class="large-2 cell">
+                <p>@review.LikeCount</p>
+            </div>
+            <div class="large-1 cell">
+                <p>
+                    @if(@review.Reported)
+                    {
+                        @yes
+                    }
+                    else
+                    {
+                        @no
+                    }
+                </p>
+            </div>
+            <div class="large-3 cell">
+                <p>@if (@review.Reported) {@review.ReportReason}</p>
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,52 @@
+﻿@model LabASPv2.Models.Book
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="body panel callout radius">
+    <h2>Добавить Книгу</h2>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "form-error is-visible" })
+        <div class="row">
+            <div class="large-12 columns">
+                <label>Название книги*
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "form-error is-visible" })
+                    @Html.EditorFor(model => model.Name)
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-12 columns">
+                <label>
+                    Имя автора*
+                    @Html.ValidationMessageFor(model => model.Author, "", new { @class = "form-error is-visible" })
+                    @Html.EditorFor(model => model.Author)
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-12 columns">
+                <label>
+                    Жанр
+                    @Html.EditorFor(model => model.Genre)
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-12 columns">
+                <label>
+                    Описание
+                    @Html.EditorFor(model => model.Description)
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-12 columns">
+                <input type="submit" class="button" value="Добавить" />
+            </div>
+        </div>
+    }
+</div>

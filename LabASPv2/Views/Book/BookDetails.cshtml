@@ -1,0 +1,97 @@
+﻿
+@model LabASPv2.Models.Book
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="body panel callout radius">
+    <div class="minitable">
+        <div class="grid-x">
+            <div class="large-3 cell">
+                <p>Название книги</p>
+            </div>
+            <div class="large-9 cell">
+                <h5>@Model.Name</h5>
+            </div>
+        </div>
+        <div class="grid-x">
+            <div class="large-3 cell">
+                <p>Имя автора</p>
+            </div>
+            <div class="large-9 cell">
+                <h5>@Model.Author</h5>
+            </div>
+        </div>
+        <div class="grid-x">
+            <div class="large-3 cell">
+                <p>Жанр книги</p>
+            </div>
+            <div class="large-9 cell">
+                <h5>@Model.Genre</h5>
+            </div>
+        </div>
+        <div class="grid-x">
+            <div class="large-3 cell">
+                <p>Описание</p>
+            </div>
+            <div class="large-9 cell">
+                <h5>@Model.Description</h5>
+            </div>
+        </div>
+        <div class="grid-x">
+            <div class="large-3 cell">
+                <p>Количество отзывов</p>
+            </div>
+            <div class="large-9 cell">
+                <h5>@Model.Reviews.Count</h5>
+            </div>
+        </div>
+    </div>
+    <div class="grid-x">
+        <div class="large-12 cell slider">
+            <h3>Отзывы
+                @Html.ActionLink(
+                    linkText: " (добавить)",
+                    actionName: "AddReview",
+                    controllerName: "Review",
+                    routeValues: new { addition = Model.Id.ToString() },
+                    htmlAttributes: new { @class = "add_review" })</h3>
+        </div>
+    </div>
+    @foreach (var review in Model.Reviews)
+    {
+        <hr />
+        <div id="review_@review.Id">
+            <div class="grid-x">
+                <div class="large-3 cell">
+                    <p>Автор отзыва</p>
+                </div>
+                <div class="large-9 cell">
+                    <p>@review.AuthorName</p>
+                </div>
+            </div>
+            <div class="grid-x">
+                <div class="large-3 cell">
+                    <p>Текст отзыва</p>
+                </div>
+                <div class="large-9 cell">
+                    <p>@review.Text</p>
+                </div>
+            </div>
+            <div class="grid-x">
+                <div class="large-6 cell">
+                    <button class="button button-like" onclick="incLikeCount(@review.Id);">
+                        <i class="fa fa-heart">
+                            <img src="~/Content/heart.png" width="20" height="20" />
+                            <b id="likes_@review.Id">@review.LikeCount</b>
+                        </i>
+                        <span>Нравится</span>
+                    </button>
+                </div>
+                <div class="large-6 cell">
+                    <button onclick="reportReview(@review.Id)" class="button alert">Пожаловаться на отзыв</button>
+                </div>
+            </div>
+        </div>
+    }

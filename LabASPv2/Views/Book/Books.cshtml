@@ -1,0 +1,65 @@
+﻿@model IEnumerable<LabASPv2.Models.Book>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    String addition = HttpContext.Current.Request.Url.AbsoluteUri.Split('/').LastOrDefault();
+    String pageNumer = addition.Split('P')[0];
+    String booksOnPage = addition.Split('P')[1];
+}
+<div class="grid-x" style="margin-left: 10%; margin-bottom: -1%;">
+    <div class="large-1 cell">
+        <button class="button" onclick="prev();"><-</button>
+    </div>
+    <div class="large-1 cell">
+        <button class="button" onclick="next();">-></button>
+    </div>
+    <div class="large-4 cell">
+        <label>
+            Номер страницы
+            <input id="pn" value="@pageNumer"/>
+        </label>
+    </div>
+    <div class="large-4 cell">
+        <label>
+            Количество книг на странице
+            <input id="bop" value="@booksOnPage"/>
+        </label>    
+    </div>
+    <div class="large-2 cell">
+        <button class="button" onclick="reloadBooks()">Применить</button>
+    </div>
+</div>
+<div class="body callout bordered_gcd">
+    <div class="grid-x">
+        <div class="large-3 cell">
+            <h5>Автор</h5>
+        </div>
+        <div class="large-4 cell">
+            <h5>Название</h5>
+        </div>
+        <div class="large-3 cell">
+            <h5>Жанр</h5>
+        </div>
+        <div class="large-2 cell">
+            <h5>*</h5>
+        </div>
+    </div>
+    @foreach (var book in Model)
+    {
+        <hr />
+        <div class="grid-x">
+            <div class="large-3 cell">
+                <p>@book.Author</p>
+            </div>
+            <div class="large-4 cell">
+                <p>@book.Name</p>
+            </div>
+            <div class="large-3 cell">
+                <p>@book.Genre</p>
+            </div>
+            <div class="large-2 cell">
+                @Html.ActionLink("Подробнее", "BookDetails", new { addition = book.Id.ToString() }, new { @class = "button" })
+            </div>
+        </div>
+    }
+</div>
